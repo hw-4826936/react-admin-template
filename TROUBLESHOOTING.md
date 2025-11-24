@@ -447,11 +447,11 @@ Ant Design 6.0 推荐使用 `Flex` 替代 `Space`：
 - ✅ 将 `dark` class 添加到 `html` 元素
 - ✅ 使用 `dark:` 前缀编写样式
 
-### 5. 代码规范
+### 6. 架构规范
 
-- ✅ 配置 ESLint + Prettier
-- ✅ 移除未使用的变量
-- ✅ 遵循 Google 代码风格
+- ✅ **Feature First**: 优先在 `src/features` 下开发业务功能
+- ✅ **Colocation**: 保持相关文件（Hook/API/Type）物理距离最近
+- ✅ **No Index Export**: 组件文件使用 PascalCase 命名 (e.g., `UserList.tsx`)，仅在 `index.ts` 做导出
 
 ---
 

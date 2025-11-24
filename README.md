@@ -55,7 +55,7 @@ pnpm dev      # 启动开发服务器
 
 ### 1. 添加新页面
 
-1. 在 `src/pages/` 下创建页面组件
+1. 在 `src/features/` 下创建功能模块
 2. 在 `src/router/index.tsx` 中添加路由
 3. 在 `src/layouts/BasicLayout.tsx` 中更新侧边栏菜单
 
@@ -95,22 +95,22 @@ const data = await request.get<UserInfo>('/api/user/info');
 
 ```
 src/
-├── api/              # API 定义
+├── api/              # API 定义 (通用/共享)
 ├── assets/           # 静态资源
-├── components/       # 通用组件
+├── components/       # 通用组件 (全局共享)
 │   ├── Permission/   # 权限控制组件
 │   └── UploadFile/   # 上传组件
-├── hooks/            # 自定义 Hooks
+├── features/         # 业务功能模块 (Feature-based Architecture)
+│   ├── Auth/         # 认证模块 (Login)
+│   ├── Dashboard/    # 仪表盘模块
+│   └── UploadDemo/   # 上传演示模块
+├── hooks/            # 通用 Hooks
 ├── layouts/          # 布局组件
 │   └── BasicLayout.tsx
-├── pages/            # 页面
-│   ├── dashboard/
-│   ├── login/
-│   └── upload-demo/
 ├── router/           # 路由配置
 │   ├── AuthGuard.tsx # 路由守卫
 │   └── index.tsx
-├── store/            # 状态管理
+├── store/            # 全局状态管理
 │   ├── themeStore.ts # 主题状态
 │   └── userStore.ts  # 用户状态
 ├── styles/           # 全局样式
@@ -119,6 +119,22 @@ src/
 ├── App.tsx
 └── main.tsx
 ```
+
+## 架构设计
+
+本项目采用 **Feature-based (按特性分层)** 架构，旨在提高可维护性和可预测性。
+
+### 核心原则
+
+1. **就近原则 (Colocation)**: 与特定功能相关的所有代码 (Components, Hooks, API, Types) 均存放在 `src/features/<FeatureName>` 目录下。
+2. **严格的作用域分离**: 只有被多个 Feature 共享的代码才放入 `src/components` 或 `src/utils`。
+3. **逻辑分离**: 业务逻辑封装在 Custom Hooks 中，组件主要负责 UI 渲染。
+
+### 新增 Feature 流程
+
+1. 在 `src/features/` 下创建功能目录 (PascalCase)。
+2. 创建主组件 (e.g., `MyFeature.tsx`) 和 导出文件 (`index.ts`)。
+3. 在 `src/router/index.tsx` 中引入并配置路由。
 
 ## 常用命令
 

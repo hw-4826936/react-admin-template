@@ -18,7 +18,9 @@ const BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 class Request {
   private instance: AxiosInstance;
+
   private isRefreshing = false;
+
   private requestsQueue: ((token: string) => void)[] = [];
 
   constructor(config: AxiosRequestConfig) {
@@ -26,12 +28,12 @@ class Request {
 
     // 请求拦截器
     this.instance.interceptors.request.use(
-      (config: InternalAxiosRequestConfig) => {
+      (requestConfig: InternalAxiosRequestConfig) => {
         const token = localStorage.getItem('token');
         if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
+          requestConfig.headers.Authorization = `Bearer ${token}`;
         }
-        return config;
+        return requestConfig;
       },
       (error: AxiosError) => {
         return Promise.reject(error);
@@ -51,7 +53,9 @@ class Request {
         }
       },
       async (error: AxiosError) => {
-        const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+        const originalRequest = error.config as InternalAxiosRequestConfig & {
+          _retry?: boolean;
+        };
 
         // 处理 401 未授权 (Token 过期)
         if (error.response?.status === 401 && !originalRequest._retry) {
@@ -86,14 +90,14 @@ class Request {
 
             // 重试当前请求
             originalRequest.headers.Authorization = `Bearer ${newToken}`;
-            return this.instance(originalRequest);
+            return await this.instance(originalRequest);
           } catch (refreshError) {
             // 刷新失败，登出
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
             message.error('登录已过期，请重新登录');
             window.location.href = '/login';
-            return Promise.reject(refreshError);
+            return await Promise.reject(refreshError);
           } finally {
             this.isRefreshing = false;
           }

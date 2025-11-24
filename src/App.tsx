@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { ConfigProvider, theme } from 'antd';
 import { RouterProvider } from 'react-router-dom';
-import router from '@/router';
+import { useTranslation } from 'react-i18next';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import 'dayjs/locale/zh-cn';
 import 'dayjs/locale/en';
-import { useTranslation } from 'react-i18next';
+import router from '@/router';
 import { useThemeStore } from '@/store/themeStore';
 
 const App: React.FC = () => {

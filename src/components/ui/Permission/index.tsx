@@ -24,7 +24,10 @@ const Permission: React.FC<PermissionProps> = ({ permission, children, fallback 
     return permissions.includes(permission);
   };
 
-  return hasPermission() ? <>{children}</> : <>{fallback}</>;
+  if (hasPermission()) {
+    return children as React.ReactElement;
+  }
+  return (fallback as React.ReactElement) || null;
 };
 
 export default Permission;

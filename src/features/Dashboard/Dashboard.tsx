@@ -1,40 +1,15 @@
 import React from 'react';
-import { Card, Col, Row, Statistic, Button, Flex } from 'antd';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { Card, Button, Flex } from 'antd';
 import { useTranslation } from 'react-i18next';
-import Permission from '@/components/Permission';
+import Permission from '@/components/ui/Permission';
+import { DashboardStats } from './components/DashboardStats';
 
-const Dashboard: React.FC = () => {
+export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <div className="p-6">
-      <Row gutter={16}>
-        <Col span={12}>
-          <Card variant="borderless">
-            <Statistic
-              title="Active"
-              value={11.28}
-              precision={2}
-              className="[&_.ant-statistic-content-value]:text-green-600"
-              prefix={<ArrowUpOutlined />}
-              suffix="%"
-            />
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card variant="borderless">
-            <Statistic
-              title="Idle"
-              value={9.3}
-              precision={2}
-              className="[&_.ant-statistic-content-value]:text-red-600"
-              prefix={<ArrowDownOutlined />}
-              suffix="%"
-            />
-          </Card>
-        </Col>
-      </Row>
+      <DashboardStats />
 
       <Card className="mt-6">
         <h2 className="text-xl font-bold mb-4">{t('dashboard.welcome')}</h2>
@@ -67,5 +42,3 @@ const Dashboard: React.FC = () => {
     </div>
   );
 };
-
-export default Dashboard;

@@ -1,8 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import Login from '@/pages/login';
-import Dashboard from '@/pages/dashboard';
-import UploadDemo from '@/pages/upload-demo';
-import BasicLayout from '@/layouts/BasicLayout';
+import { Login } from '@/features/Auth';
+import { Dashboard } from '@/features/Dashboard';
+import { UploadDemo } from '@/features/UploadDemo';
+import BasicLayout from '@/components/layout/BasicLayout';
 import AuthGuard from './AuthGuard';
 
 const router = createBrowserRouter([

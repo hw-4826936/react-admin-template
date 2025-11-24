@@ -5,6 +5,14 @@ module.exports = {
     es2022: true,
     node: true,
   },
+  ignorePatterns: [
+    '*.config.js',
+    '*.config.cjs',
+    '*.config.mjs',
+    'dist',
+    'node_modules',
+    '.eslintrc.cjs',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -66,6 +74,23 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+
+    // Disable file extension requirement for TypeScript and path aliases
+    'import/extensions': 'off',
+    // Allow @ alias resolution
+    'import/no-unresolved': 'off', // Handled by TypeScript compiler
+
+    // TypeScript with default parameters doesn't need defaultProps
+    'react/require-default-props': 'off',
+
+    // Allow underscore prefix for private/internal properties
+    'no-underscore-dangle': ['error', { allow: ['_retry'] }],
+
+    // Allow parameter reassignment in interceptors
+    'no-param-reassign': ['error', { props: false }],
+
+    // Allow else after return for clarity
+    'no-else-return': 'off',
   },
   settings: {
     react: {
